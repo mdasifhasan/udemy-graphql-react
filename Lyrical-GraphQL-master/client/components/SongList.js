@@ -10,7 +10,7 @@ class SongList extends Component{
     renderSongs(){
         return this.props.data.songs.map(song => {
             return (
-                <li key="{song.id}" className="collection-item">
+                <li key={song.id} className="collection-item">
                     {song.title}
                 </li>
             )
