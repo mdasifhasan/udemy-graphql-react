@@ -13,9 +13,20 @@ class SongList extends Component{
             return (
                 <li key={song.id} className="collection-item">
                     {song.title}
+                    <i className="material-icons right" onClick={() => {this.OnSongDelete(song.id)}}>delete</i>
                 </li>
             )
         })
+    }
+
+    OnSongDelete(id){
+        console.log("delete id: " + id);
+        console.log(this.props);
+        this.props.mutate({
+            variables: {
+                id: id
+            }
+        }).then(this.props.data.refetch());
     }
 
     render(){
@@ -34,5 +45,12 @@ class SongList extends Component{
     }
 }
 
+const mutationDeleteSong = gql`mutation DeleteSong($id: ID) {
+    deleteSong(id: $id) {
+        id
+    }
+}`;
 
-export default graphql(query)(SongList);
+export default graphql(mutationDeleteSong) (
+    graphql(query)(SongList)
+);
